@@ -1,4 +1,4 @@
-Docker Up and Running!
+Docker Getting Started!
 ====================
 
 **Key Concepts**

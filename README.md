@@ -1,14 +1,14 @@
 # dockerdemo
 
 
-It might be helpful to read the associated document [Docker Getting Started](DOCKER_GETTING_STARTED.md) before running through this. 
+It might be helpful to read the associated document [Docker Getting Started](DOCKER_GETTING_STARTED.md) before running through this.
 
 __Step 1: Set up a Mongodb Container__
 --
 Dockerfile for the mongo image
 ```javascript
 FROM centos:latest
-MAINTAINER Peter Doyle "peter.g.doyle@gmail.com"
+MAINTAINER Peter Doyle "peter.g.doyle@*.com"
 ENV REFRESHED_AT 2015-09-01
 
 COPY mongodb-org-3.0.repo /etc/yum.repos.d/mongodb-org-3.0.repo
