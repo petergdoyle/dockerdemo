@@ -1,6 +1,8 @@
 # dockerdemo
 
 
+It might be helpful to read the associated document [Docker Getting Started](DOCKER_GETTING_STARTED.md) before running through this. 
+
 __Step 1: Set up a Mongodb Container__
 --
 Dockerfile for the mongo image
@@ -239,4 +241,4 @@ $ docker run -it --name say_hello_mongo --link mongo_instance_001:mongo001 demo/
 Connected correctly to server.
 ```
 
-You can link multiple containers together. For example, if we wanted to use our mongo instance for multiple web applications, we could link each web application container to the same mongo container using the same --link directive. 
+You can link multiple containers together. For example, if we wanted to use our mongo instance for multiple web applications, we could link each web application container to the same mongo container using the same --link directive.
