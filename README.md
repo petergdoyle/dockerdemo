@@ -1,6 +1,9 @@
 # dockerdemo
 
 
+__Step 1: Set up a Mongodb Container__
+--
+
 check images
 ```console
 $ docker images
@@ -81,3 +84,36 @@ Server has startup warnings:
 2015-09-07T15:23:40.634+0000 I CONTROL  [initandlisten]
 >
 ```
+
+You should now be able to check the mongod service by running a telnet command. CTL-Z, CTL-Z to exit telnet.
+```console
+$ telnet localhost 27017
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+
+```
+
+And now stop the container
+```console
+$ docker stop mongo_instance_001
+ mongo_instance_001
+```
+
+And telnet should fail
+```console
+$ telnet localhost 27017
+Trying ::1...
+telnet: connect to address ::1: Connection refused
+Trying 127.0.0.1...
+telnet: connect to address 127.0.0.1: Connection refused
+```
+
+And now start the container up again
+```console
+$ docker start mongo_instance_001
+ mongo_instance_001
+```
+
+__Step 2: Set up a Node.js Container__
+-- 
