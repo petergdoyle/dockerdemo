@@ -24,7 +24,7 @@ You share those Docker images via Docker Hub or your own registry.
  - Docker containers are a little different than full-blown VMs. Docker containers by default have no running processes. Without a running process, the container has nothing to do. Part of the process of creating a container is to give it something to do.
 	 - So think of the container as a process rather than a vm and you go further. The design goal is to move what was one of many processes on a VM to a container, so running a container is akin to running a process or a service. Those services interact with each other not through inter-process communication but by TCP ports and APIs just like regular services.
 
- - It is very difficult (right now at least until Docker supports user mapping more cleanly) to share a volume or folder contents between host and container without security workarounds (based on my experience with the . This is both good and bad. It is bad because it is convenient to develop with (IMHO). It is good because it maintains the "shared nothing"  design goal of micro-services, in this case dependent / persistent data storage between containers - as well this prevents some security issues.  For more information check out the Docker '-v' option and the '--volumes-from' option - and all the hacks in between. See Reference 1,2,3 at the end of this document for more help.
+ - It is ~~very~~ more difficult (right now at least until Docker supports user mapping more cleanly) to share a volume or folder contents cleanly between host and container without security workarounds (based on my experience) because of the container root:0 setup. This is both good and bad. It is bad because it is convenient to develop with (IMHO). It is good because it maintains the "shared nothing"  design goal of micro-services, in this case dependent / persistent data storage between containers - as well this prevents some security issues.  For more information check out the Docker '-v' option and the '--volumes-from' option - and all the hacks in between. See Reference 1,2,3 at the end of this document for more help.
 
 **Keep in mind the Docker Architecture: Layers**
 "*A Docker image is made up of filesystems layered over each other. At the base is a boot filesystem, bootfs, which resembles the typical Linux/ Unix boot filesystem. A Docker user will probably never interact with the boot filesystem. Indeed, when a container has booted, it is moved into memory, and the boot filesystem is unmounted to free up the RAM used by the initrd disk image. When Docker first starts a container, the initial read-write layer is empty. As changes occur, they are applied to this layer; for example, if you want to change a file, then that file will be copied from the read-only layer below into the read-write layer. The read-only version of the file will still exist but is now hidden underneath the copy. This pattern is traditionally called "copy on write" and is one of the features that makes Docker so powerful. Each read-only image layer is read-only; this image never changes. When a container is created, Docker builds from the stack of images and then adds the read-write layer on top. That layer, combined with the knowledge of the image layers below it and some configuration data, form the container. As we discovered in the last chapter, containers can be changed, they have state, and they can be started and stopped. This, and the image-layering framework, allows us to quickly build images and run containers with our applications and services.*"
@@ -388,8 +388,14 @@ Some things to remember:
 	 - By binding every veth* interface to the docker0 bridge, Docker creates a virtual subnet shared between the host machine and every Docker container.
 
 
+##Docker Machine
+Docker Machine provides a simple interface for interacting with a large number of providers through its drivers to create and set up Docker hosts on various servers.
 
+##Docker Swarm
+Docker Swarm is native clustering for Docker. It allows you create and access to a pool of Docker hosts using the full suite of Docker tools. Because Docker Swarm serves the standard Docker API, any tool that already communicates with a Docker daemon can use Swarm to transparently scale to multiple hosts.
 
+##Docker Compose
+Compose is a tool for defining and running multi-container applications with Docker. With Compose, you define a multi-container application in a single file, then spin your application up in a single command which does everything that needs to be done to get it running.Compose is great for development environments, staging servers, and CI.
 
 __Useful References__
 ---
@@ -401,6 +407,10 @@ __Useful References__
  5. [Gotchas in Writing Dockerfile](http://kimh.github.io/blog/en/docker/gotchas-in-writing-dockerfile-en/)
  6. [Guidance for Docker Image Authors](http://www.projectatomic.io/docs/docker-image-author-guidance/)
  7. [Dockerfile Best Practices](http://crosbymichael.com/dockerfile-best-practices.html)
+ 8. [Docker Machine](http://blog.codefresh.io/docker-machine-basics/)
+ 9. [Orchestrate Containers for Development with Docker Compose](https://blog.codeship.com/orchestrate-containers-for-development-with-docker-compose/)
+
+
 
 __Resources__
 --
