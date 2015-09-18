@@ -409,6 +409,7 @@ __Useful References__
  7. [Dockerfile Best Practices](http://crosbymichael.com/dockerfile-best-practices.html)
  8. [Docker Machine](http://blog.codefresh.io/docker-machine-basics/)
  9. [Orchestrate Containers for Development with Docker Compose](https://blog.codeship.com/orchestrate-containers-for-development-with-docker-compose/)
+ 10. [Understanding Volumes in Docker](http://container-solutions.com/understanding-volumes-docker/)
 
 
 
