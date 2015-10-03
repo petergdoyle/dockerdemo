@@ -125,7 +125,7 @@ export MAVEN_HOME=$MAVEN_HOME
 EOF
 
 
-  #install kafka
+  #install apache kafka
   curl -O --insecure http://apache.claz.org/kafka/0.8.2.1/kafka_2.9.1-0.8.2.1.tgz
   mkdir /usr/kafka; \
   tar -xvf kafka_2.9.1-0.8.2.1.tgz -C /usr/kafka; \
@@ -136,13 +136,13 @@ EOF
 export KAFKA_HOME=$KAFKA_HOME
 EOF
 
-  #install storm
+  #install apache storm
   curl -O http://apache.arvixe.com/storm/apache-storm-0.9.5/apache-storm-0.9.5.tar.gz
   mkdir /usr/storm; \
   tar -xvf apache-storm-0.9.5.tar.gz -C /usr/storm; \
   ln -s /usr/storm/apache-storm-0.9.5 /usr/storm/default; \
   rm -f apache-storm-0.9.5.tar.gz
-  export STORM_HOME='/usr/kafka/storm'
+  export STORM_HOME='/usr/storm/default'
   cat >/etc/profile.d/storm.sh <<-EOF
 export STORM_HOME=$STORM_HOME
 EOF
