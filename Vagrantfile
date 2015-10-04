@@ -32,6 +32,13 @@ Vagrant.configure(2) do |config|
 #export https_proxy=$HTTP_PROXY
 #EOF
 
+  if [ -n "$HTTP_PROXY" ]; then
+    curl -I -x $HTTP_PROXY http://google.com
+    if [ $? -ne 0 ]; then
+      echo "invalid proxy settings. cannot continue"
+      exit 1
+    fi
+  fi
 
   #best to update the os
   yum -y update
@@ -147,6 +154,21 @@ EOF
 export STORM_HOME=$STORM_HOME
 EOF
 
+  #install ahapch hadoop
+  curl -O http://apache.arvixe.com/hadoop/common/stable/hadoop-2.7.1.tar.gz
+  curl -O https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1-src.tar.gz.asc
+  curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
+  gpg --import KEYS
+  gpg --verify hadoop-2.7.1-src.tar.gz.asc
+  mkdir /usr/hadoop; \
+  tar -xvf hadoop-2.7.1.tar.gz -C /usr/hadoop; \
+  ln -s /usr/hadoop/hadoop-2.7.1 /usr/hadoop/default
+  rm -fr hadoop-2.7.1.tar.gz hadoop-2.7.1.tar.gz.asc
+  export HADOOP_HOME='/usr/hadoop/default'
+  cat >/etc/profile.d/hadoop.sh <<-EOF
+export HADOOP_HOME=$HADOOP_HOME
+EOF
+
 
   #install spring xd
   wget https://repo.spring.io/libs-release-local/org/springframework/xd/spring-xd/1.1.2.RELEASE/spring-xd-1.1.2.RELEASE-1.noarch.rpm
@@ -165,8 +187,14 @@ EOF
   #su - vagrant -c 'sdk install groovy'     #optional
   #su - vagrant -c 'sdk install grails'     #optional
 
+
+  #install redis
+  yum -y install redis redis-cli
+  systemctl start redis.service
+  systemctl enable redis.service
+
   #set hostname
-  hostnamectl set-hostname docker.vbx
+  hostnamectl set-hostname dockerdemo.vbx
 
   SHELL
 end
