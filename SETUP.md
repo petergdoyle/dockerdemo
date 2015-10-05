@@ -120,7 +120,7 @@ There is another section below that needs to be configured as well. Just uncomme
 #vnpm config set https-proxy $HTTP_PROXY
 ```
 
-Okay, now save the file with Atom using a ctl+s key combination or use the file menu and select save. 
+Okay, now save the file with Atom using a ctl+s key combination or use the file menu and select save.
 
 ###Finally !
 
@@ -138,11 +138,11 @@ You should now have a running vm that you can ssh into and you should end up ins
 	$ vagrant ssh
     [vagrant@docker ~]$
 
-If everything installed correctly you should be able to verify things. If anything message shows up in red then we will have to figure out what went wrong. 
+If everything installed correctly you should be able to verify things. If anything message shows up in red then we will have to figure out what went wrong.
 
 	$ /vagrant/verify.sh
 
-To check individual items you can run the following
+To check individual items you can run the following (if you are interested, as verify.sh will find any issues of something didn't get installed)
 
 	[vagrant@docker ~]$ docker version
     Client version: 1.7.1
