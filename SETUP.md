@@ -25,6 +25,7 @@ Step 2 - Install Vagrant
 Step 3 Install Git
 ---
 ![image](https://www.dropbox.com/s/zyn17c3gh8qfmtj/git.png?raw=1)
+
 ***Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
 Git is easy to learn and has a tiny footprint with lightning fast performance. It outclasses SCM tools like Subversion, CVS, Perforce, and ClearCase with features like cheap local branching, convenient staging areas, and multiple workflows.***
 
@@ -120,6 +121,8 @@ There is another section below that needs to be configured as well. Just uncomme
 #npm config set proxy $HTTP_PROXY
 #vnpm config set https-proxy $HTTP_PROXY
 ```
+
+Okay, now save the file with Atom using a ctl+s key combination or use the file menu and select save. 
 
 ###Finally !
 
