@@ -2,6 +2,7 @@
 Step 1 - Install Virtualbox
 ---
 ![image](https://www.dropbox.com/s/e50moqrl8ev9mrr/virtualbox.png?raw=1)
+
 ***VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as home use.***
 
 >win, lin, OS X [downloads here](https://www.virtualbox.org)
