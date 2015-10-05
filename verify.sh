@@ -8,7 +8,6 @@ cmds=(
   'mongo --version' \
   'mvn -version' \
   'spring version' \
-  'dummy version' \
   '/opt/pivotal/spring-xd/xd/bin/xd-admin' \
   '/usr/storm/default/bin/storm version' \
   '/usr/hadoop/default/bin/hadoop version'

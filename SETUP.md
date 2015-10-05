@@ -76,8 +76,6 @@ Since we will be using a terminal for most of this exercise (from Git Bash on Wi
 >[Setting Up Github for Windows behind a Proxy Server
 What will most probably work…](https://medium.com/neithans-diary/setting-up-github-for-windows-behind-a-proxy-server-1f39b27218b7)
 
-**OS-X, LIN** - If you are on OS-X or Linux then copy that export command into your .bashrc
-
 Now using git bash or an OS X or linux terminal window, you now need to pull this vagrant image I uploaded to the Atlas repository by typing the following vagrant command.
 
 >**Note**: Vagrant can manage many types of boxes, but since these are Virtualbox "boxes" that we will be using these downloaded images will be stored under your home directory  ‘VirtualBox VMs" directory by default,  if you want to change that directory because of space considerations then go to the Virtualbox gui and change it under Preferences | General -> Default Machine Folder
