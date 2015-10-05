@@ -43,9 +43,13 @@ Vagrant.configure(2) do |config|
   #best to update the os
   yum -y update
   #install additional tools
+  eval 'tree' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   yum -y install vim htop curl wget net-tools tree unzip
+  fi
 
-
+  eval 'docker --version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install docker service
   cat >/etc/yum.repos.d/docker.repo <<-EOF
 [dockerrepo]
@@ -70,8 +74,10 @@ EOF
   #Compose is a tool for defining and running multi-container applications with Docker.
   yum -y install python-pip
   pip install -U docker-compose
+  fi
 
-
+  eval $'node --version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install node.js and npm
   yum -y install epel-release gcc gcc-c++
   yum -y install nodejs npm
@@ -83,8 +89,12 @@ EOF
   npm install format-json-stream -g
   #install azure-cli
   npm install azure-cli -g
+  fi
 
 
+  cmd='mongo --version'
+  eval $cmd > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install mongodb and start it and enable it at startup
   cat >/etc/yum.repos.d/mongodb-org-3.repo <<-EOF
 [mongodb-org-3.0]
@@ -97,7 +107,10 @@ EOF
   systemctl start mongod.service
   chkconfig mongod on
 
+  fi
 
+  eval 'java -version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install java jdk 8 from oracle
   curl -O -L --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
   "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.tar.gz"
@@ -116,6 +129,10 @@ EOF
 export JAVA_HOME=$JAVA_HOME
 EOF
 
+  fi
+
+  eval 'mvn -version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install maven
   curl -O http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
   mkdir /usr/maven; \
@@ -130,7 +147,11 @@ EOF
 export MAVEN_HOME=$MAVEN_HOME
 EOF
 
+  fi
 
+
+  eval '/usr/kafka/default/bin/kafka-run-class.sh' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install apache kafka
   curl -O --insecure http://apache.claz.org/kafka/0.8.2.1/kafka_2.9.1-0.8.2.1.tgz
   mkdir /usr/kafka; \
@@ -142,6 +163,11 @@ EOF
 export KAFKA_HOME=$KAFKA_HOME
 EOF
 
+  fi
+
+
+  eval '/usr/storm/default/bin/storm version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install apache storm
   curl -O http://apache.arvixe.com/storm/apache-storm-0.9.5/apache-storm-0.9.5.tar.gz
   mkdir /usr/storm; \
@@ -153,6 +179,11 @@ EOF
 export STORM_HOME=$STORM_HOME
 EOF
 
+  fi
+
+
+  eval '/usr/hadoop/default/bin/hadoop version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install ahapch hadoop
   curl -O http://apache.arvixe.com/hadoop/common/stable/hadoop-2.7.1.tar.gz
   curl -O https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1-src.tar.gz.asc
@@ -168,7 +199,10 @@ EOF
 export HADOOP_HOME=$HADOOP_HOME
 EOF
 
+  fi
 
+  eval '/opt/pivotal/spring-xd/xd/bin/xd-admin' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install spring xd
   wget https://repo.spring.io/libs-release-local/org/springframework/xd/spring-xd/1.1.2.RELEASE/spring-xd-1.1.2.RELEASE-1.noarch.rpm
   yum -y localinstall spring-xd-1.1.2.RELEASE-1.noarch.rpm
@@ -177,20 +211,25 @@ EOF
   alternatives --install /usr/bin/xd-singlenode xd-singlenode /opt/pivotal/spring-xd/xd/bin/xd-singlenode 99999
   sed -i "/#Port that admin-ui is listening on/a xd:\\n  ui:\\n    allow_origin: \"*\"" /opt/pivotal/spring-xd/xd/config/servers.yml
   rm -f spring-xd-1.1.2.RELEASE-1.noarch.rpm
+  fi
 
-
+  eval "su - vagrant -c 'spring version'" > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install spring boot
   su - vagrant -c 'curl -s get.gvmtool.net | bash'
   su - vagrant -c 'printf "sdkman_auto_answer=true" > /home/vagrant/.sdkman/etc/config'
   su - vagrant -c 'sdk install springboot'
   #su - vagrant -c 'sdk install groovy'     #optional
   #su - vagrant -c 'sdk install grails'     #optional
+  fi
 
-
+  eval 'redis-cli --version' > /dev/null 2>&1
+  if [ $? -eq 127 ]; then
   #install redis
   yum -y install redis redis-cli
   systemctl start redis.service
   systemctl enable redis.service
+  fi
 
   #set hostname
   hostnamectl set-hostname dockerdemo.vbx
