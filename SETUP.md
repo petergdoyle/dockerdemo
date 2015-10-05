@@ -30,8 +30,8 @@ Git is easy to learn and has a tiny footprint with lightning fast performance. I
 >Git may already installed on linux or OS X - if not use ‘apt-get install git’ on .deb type distros (Ubuntu), or ‘yum install git’ for rpm based distros. Check by typing in a terminal window.
 
 >	$ git version
-    
-    
+
+
 >windows - install git for windows will install git bash [download here](https://git-for-windows.github.io)
 
 
@@ -61,16 +61,20 @@ I have created a vagrant “box” for our use based on CentOS and "push"'d it u
 Since we will be using a terminal for most of this exercise (from Git Bash on Windows, or a regular terminal from OS X or Linux) you may need to get through to the Internet using a Proxy Server.  If you are in Atlanta the TP proxy server there is "http://atlproxy.tvlport.com:8080".  If you are in Denver, then the TP proxy server there is "http://proxyden.galileo.corp.lcl:8080". So export that value as an environment variable first, then set the other proxy variables that will be required by various cmd-line tools.
 
 
-**WIN, LIN, OSX** - For temporarily setting the proxy (on any platform), use this command in a terminal window. 
+**WIN, LIN, OSX** - For temporarily setting the proxy (on any platform), use this command in a terminal window.
 
 	$ export HTTP_PROXY=<your-proxy-server-url> HTTPS_PROXY=$PROXY http_proxy=$PROXY https_proxy=$PROXY
+
+**WIN, LIN, OSX** - For permanently setting the proxy (on any platform), use this command in a terminal window.
+
+	$ echo -e "export HTTP_PROXY=$HTTP_PROXY\nexport HTTPS_PROXY=$HTTP_PROXY\nexport http_proxy=$HTTP_PROXY\nexport https_proxy=$HTTP_PROXY" >> ~/.bashrc
 
 **WIN** - If you are on windows using git for windows (git bash) I would suggest following these directions
 
 >[Setting Up Github for Windows behind a Proxy Server
 What will most probably work…](https://medium.com/neithans-diary/setting-up-github-for-windows-behind-a-proxy-server-1f39b27218b7)
 
-**OS-X, LIN** - If you are on OS-X or Linux then copy that export command into your .bashrc 
+**OS-X, LIN** - If you are on OS-X or Linux then copy that export command into your .bashrc
 
 Now using git bash or an OS X or linux terminal window, you now need to pull this vagrant image I uploaded to the Atlas repository by typing the following vagrant command.
 
@@ -91,11 +95,11 @@ Now open up the Vagrantfile with gui editor - my new favorite is Atom but you ca
 
 	$ cd dockerdemo
 	$ atom .
-    
+
 ####Proxies Again, but this time for the new vm
 
 We need to tell the new vm about the proxy settings as well before we create it. So modify the Vagrantfile simply by clicking on the Vagrantfile and then looking for the commented out section that looks like this - and just uncomment out ALL the lines by removing the '#' symbols (but obviously not the first line ```# Global Proxy Settings```)
-And replace ```http://myproxy.net:80``` with whichever proxy server url you used for git. 
+And replace ```http://myproxy.net:80``` with whichever proxy server url you used for git.
 ```
 # Global Proxy Settings
 #  export HTTP_PROXY=http://myproxy.net:80 HTTPS_PROXY=$HTTP_PROXY http_proxy=$HTTP_PROXY https_proxy=$HTTP_PROXY
@@ -118,21 +122,25 @@ There is another section below that needs to be configured as well. Just uncomme
 
 ###Finally !
 
-Let's bring up the new virtual machine for our development with the vagrant command 
+Let's bring up the new virtual machine for our development with the vagrant command
 
-	$ vagrant up 
-    
+	$ vagrant up
+
 You should see a lot of stuff going on there and some type of success message at the end.
 Now restart the vm.
 
-	$ vagrant halt; vagrant up 
+	$ vagrant halt; vagrant up
 
 You should now have a running vm that you can ssh into and you should end up inside the new vm terminal as user vagrant on the host 'dockerdemo'
 
 	$ vagrant ssh
     [vagrant@docker ~]$
-    
-If everything installed correctly you should be able to verify things
+
+If everything installed correctly you should be able to verify things. If anything message shows up in red then we will have to figure out what went wrong. 
+
+	$ /vagrant/verify.sh
+
+To check individual items you can run the following
 
 	[vagrant@docker ~]$ docker version
     Client version: 1.7.1
@@ -156,18 +164,18 @@ If everything installed correctly you should be able to verify things
 
 	$ [vagrant@docker ~]$ node --version
 	v0.10.36
-    
+
     [vagrant@docker ~]$ mongo --version
 	MongoDB shell version: 3.0.6
-    
-    [vagrant@docker ~]$ spring version 
+
+    [vagrant@docker ~]$ spring version
 	Spring CLI v1.2.6.RELEASE
-    
+
     [vagrant@docker ~]$ java -version
 	java version "1.8.0_60"
 	Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
 	Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)
-    
+
 	[vagrant@docker ~]$ mvn -version
 	Apache Maven 3.3.3 (7994120775791599e205a5524ec3e0dfe41d4a06; 2015-04-22T07:57:37-04:00)
 	Maven home: /usr/maven/default
@@ -175,7 +183,7 @@ If everything installed correctly you should be able to verify things
 	Java home: /usr/java/jdk1.8.0_60/jre
 	Default locale: en_US, platform encoding: UTF-8
 	OS name: "linux", version: "3.10.0-229.7.2.el7.x86_64", arch: "amd64", family: "unix"
-    
+
     [vagrant@docker ~]$ /opt/pivotal/spring-xd/xd/bin/xd-admin
 
      _____                           __   _______
@@ -191,13 +199,13 @@ If everything installed correctly you should be able to verify things
 
     Started : AdminServerApplication
     Documentation: https://github.com/spring-projects/spring-xd/wiki
-    
+
     [vagrant@docker ~]$ /usr/storm/default/bin/storm version
 	0.9.5
 
 	[vagrant@docker ~]$ redis-cli --version
 	redis-cli 2.8.19
-   
+
 	[vagrant@docker ~]$ /usr/hadoop/default/bin/hadoop version
     Hadoop 2.7.1
     Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r 15ecc87ccf4a0228f35af08fc56de536e6ce657a
@@ -205,5 +213,3 @@ If everything installed correctly you should be able to verify things
     Compiled with protoc 2.5.0
     From source with checksum fc0a1a23fc1868e4d5ee7fa2b28a58a
     This command was run using /usr/hadoop/hadoop-2.7.1/share/hadoop/common/hadoop-common-2.7.1.jar
-
-

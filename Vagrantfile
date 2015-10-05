@@ -46,20 +46,6 @@ Vagrant.configure(2) do |config|
   yum -y install vim htop curl wget net-tools tree unzip
 
 
-  #install node.js and npm
-  yum -y install epel-release gcc gcc-c++
-  yum -y install nodejs npm
-  # NPM Proxy Settings
-  #npm config set proxy $HTTP_PROXY
-  #vnpm config set https-proxy $HTTP_PROXY
-
-  #useful node.js packages
-  npm install format-json-stream -g
-  #install azure-cli
-  npm install azure-cli -g
-
-
-
   #install docker service
   cat >/etc/yum.repos.d/docker.repo <<-EOF
 [dockerrepo]
@@ -84,6 +70,19 @@ EOF
   #Compose is a tool for defining and running multi-container applications with Docker.
   yum -y install python-pip
   pip install -U docker-compose
+
+
+  #install node.js and npm
+  yum -y install epel-release gcc gcc-c++
+  yum -y install nodejs npm
+  # NPM Proxy Settings
+  #npm config set proxy $HTTP_PROXY
+  #vnpm config set https-proxy $HTTP_PROXY
+
+  #useful node.js packages
+  npm install format-json-stream -g
+  #install azure-cli
+  npm install azure-cli -g
 
 
   #install mongodb and start it and enable it at startup
