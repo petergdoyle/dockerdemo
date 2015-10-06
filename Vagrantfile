@@ -74,6 +74,8 @@ EOF
   #Compose is a tool for defining and running multi-container applications with Docker.
   yum -y install python-pip
   pip install -U docker-compose
+  else
+    echo -e "\e[30;48;5;82m docker already appears to be installed. skipping.\e[0m"
   fi
 
   eval $'node --version' > /dev/null 2>&1
@@ -81,14 +83,19 @@ EOF
   #install node.js and npm
   yum -y install epel-release gcc gcc-c++
   yum -y install nodejs npm
+
   # NPM Proxy Settings
   #npm config set proxy $HTTP_PROXY
   #vnpm config set https-proxy $HTTP_PROXY
-
   #useful node.js packages
+
+
   npm install format-json-stream -g
   #install azure-cli
   npm install azure-cli -g
+
+  else
+    echo -e "\e[30;48;5;82m node, npm, npm-libs already appear to be installed. skipping. \e[0m"
   fi
 
 
@@ -107,6 +114,8 @@ EOF
   systemctl start mongod.service
   chkconfig mongod on
 
+  else
+    echo -e "\e[30;48;5;82m mongo already appears to be installed. skipping. \e[0m"
   fi
 
   eval 'java -version' > /dev/null 2>&1
@@ -129,6 +138,8 @@ EOF
 export JAVA_HOME=$JAVA_HOME
 EOF
 
+  else
+    echo -e "\e[30;48;5;82m java already appears to be installed. skipping. \e[0m"
   fi
 
   eval 'mvn -version' > /dev/null 2>&1
@@ -147,6 +158,8 @@ EOF
 export MAVEN_HOME=$MAVEN_HOME
 EOF
 
+  else
+    echo -e "\e[30;48;5;82m maven already appears to be installed. skipping. \e[0m"
   fi
 
 
@@ -163,6 +176,8 @@ EOF
 export KAFKA_HOME=$KAFKA_HOME
 EOF
 
+  else
+    echo -e "\e[30;48;5;82m kafak already appears to be installed. skipping. \e[0m"
   fi
 
 
@@ -179,6 +194,8 @@ EOF
 export STORM_HOME=$STORM_HOME
 EOF
 
+  else
+    echo -e "\e[30;48;5;82m storm already appears to be installed. skipping. \e[0m"
   fi
 
 
@@ -199,6 +216,8 @@ EOF
 export HADOOP_HOME=$HADOOP_HOME
 EOF
 
+  else
+    echo -e "\e[30;48;5;82m hadoop already appears to be installed. skipping. \e[0m"
   fi
 
   eval '/opt/pivotal/spring-xd/xd/bin/xd-admin' > /dev/null 2>&1
@@ -211,6 +230,8 @@ EOF
   alternatives --install /usr/bin/xd-singlenode xd-singlenode /opt/pivotal/spring-xd/xd/bin/xd-singlenode 99999
   sed -i "/#Port that admin-ui is listening on/a xd:\\n  ui:\\n    allow_origin: \"*\"" /opt/pivotal/spring-xd/xd/config/servers.yml
   rm -f spring-xd-1.1.2.RELEASE-1.noarch.rpm
+  else
+    echo -e "\e[30;48;5;82m spring-xd already appears to be installed. skipping. \e[0m"
   fi
 
   eval "su - vagrant -c 'spring version'" > /dev/null 2>&1
@@ -221,6 +242,8 @@ EOF
   su - vagrant -c 'sdk install springboot'
   #su - vagrant -c 'sdk install groovy'     #optional
   #su - vagrant -c 'sdk install grails'     #optional
+  else
+    echo -e "\e[30;48;5;82m springboot already appears to be installed. skipping. \e[0m"
   fi
 
   eval 'redis-cli --version' > /dev/null 2>&1
@@ -229,6 +252,8 @@ EOF
   yum -y install redis redis-cli
   systemctl start redis.service
   systemctl enable redis.service
+  else
+    echo -e "\e[30;48;5;82m redis already appears to be installed. skipping. \e[0m"
   fi
 
   #set hostname
