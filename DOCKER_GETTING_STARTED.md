@@ -124,7 +124,7 @@ ___Containers___
 
 **Launch a new container** called 'centos7_general' from the cents image and open a Bash Shell
 ```console
-$ docker run -i -t --name centos7_general_purpose centos \
+$ docker run -i -t --name centos7_demo centos \
 /bin/bash
 ```
 translation:
@@ -145,11 +145,11 @@ An exit will basically stop the container and return to the Docker host command 
 
 **To start the container**
 ```console
-$ docker start centos7_general_purpose
+$ docker start centos7_demo
 ```
 **To attach to the running container**
 ```console
-$ docker attach centos7_general_purpose
+$ docker attach centos7_demo
 ```
 If the container were not running you would receive this message
 ```console
@@ -163,16 +163,16 @@ Shut down the interactive container first by exiting the container if attached.
 ```
 **To stop the container **
 ```console
-$ docker stop centos7_general_purpose
+$ docker stop centos7_demo
 ```
 **To start the container as a "daemonized container"** specify the '-d' directive to tell Docker to detach the container to the background.
 ```console
-$ docker run --name centos7_general_purpose -d centos /bin/bas
+$ docker run --name centos7_demo -d centos /bin/bas
 h -c "while true; do echo running; sleep 1; done"
 ```
 __Note:__ the container needs something to do or it just starts and stops. In this case we gave it a shell command to echo a 'running' message to stdout. We can view this output by issuing a logs command
 ```console
-$ docker logs centos7_general_purpose
+$ docker logs centos7_demo
 running
 running
 running
@@ -180,21 +180,26 @@ running
 ```
 To see the output with timestamps we can add the -t flag and the --tail flag to see some portion of the output
 ```console
-$ docker logs -t --tail 3 centos7_general_purpose
+$ docker logs -t --tail 3 centos7_demo
 2015-09-04T21:32:47.602890698Z running
 2015-09-04T21:32:48.603630912Z running
 2015-09-04T21:32:56.609339422Z running
 ```
+To see continous log output like a tailf or "tail -f" command
+```console
+$ docker logs -f centos7_demo
+```
+
 **To inspect a container's process** we can use the stats command
 ```console
-$ docker stats centos7_general_purpose
+$ docker stats centos7_demo
 CONTAINER                 CPU %               MEM USAGE/LIMIT     MEM %               NET I/O
-centos7_general_purpose   0.00%               0 B/0 B             0.00%               0 B/0 B
+centos7_demo   0.00%               0 B/0 B             0.00%               0 B/0 B
 ```
 
 **To run a process inside a running container** with the exec command
 ```console
-$ docker exec centos7_general_purpose /bin/bash
+$ docker exec centos7_demo /bin/bash
 ```
 
 **To look at the containers currently running**
@@ -206,18 +211,18 @@ dd9044eec742        petergdoyle/static_nginx_web   "nginx -g 'daemon of   14 hou
 
 **To run a process inside a running container** with the exec command
 ```console
-$ docker exec centos7_general_purpose /bin/bash
+$ docker exec centos7_demo /bin/bash
 ```
 
 **Getting to a shell on the running container:** if the docker container was started using /bin/bash command you can access it using 'attach', if not then you need to execute the command to create a bash instance inside the container using 'exec'.
 
 Always works (but is the only way if /bin/bash not used to start)
 ```console
-$ docker exec -i -t centos7_general_purpose bash
+$ docker exec -i -t centos7_demo bash
 ```
 Works if container started with /bin/bash
 ```console
-$ docker attach centos7_general_purpose
+$ docker attach centos7_demo
 ```
 
 __*It is not recommended to set up an sshd process inside a container__
