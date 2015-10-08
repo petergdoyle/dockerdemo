@@ -65,7 +65,8 @@ Since we will be using a terminal for most of this exercise (from Git Bash on Wi
 
 **WIN, LIN, OSX** - For temporarily setting the proxy (on any platform), use this command in a terminal window.
 
-	$ export HTTP_PROXY=<your-proxy-server-url> HTTPS_PROXY=$PROXY http_proxy=$PROXY https_proxy=$PROXY
+	$ export HTTP_PROXY=<your-proxy-server-url>
+	$ export HTTPS_PROXY=$PROXY http_proxy=$PROXY https_proxy=$PROXY
 
 **WIN, LIN, OSX** - For permanently setting the proxy (on any platform), use this command in a terminal window.
 
