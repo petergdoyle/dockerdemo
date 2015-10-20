@@ -174,6 +174,7 @@ EOF
   export KAFKA_HOME='/usr/kafka/default'
   cat >/etc/profile.d/kafka.sh <<-EOF
 export KAFKA_HOME=$KAFKA_HOME
+export PATH=$PATH:$KAFKA_HOME/bin
 EOF
 
   else
@@ -192,6 +193,7 @@ EOF
   export STORM_HOME='/usr/storm/default'
   cat >/etc/profile.d/storm.sh <<-EOF
 export STORM_HOME=$STORM_HOME
+export PATH=$PATH:$STORM_HOME/bin
 EOF
 
   else
@@ -214,6 +216,7 @@ EOF
   export HADOOP_HOME='/usr/hadoop/default'
   cat >/etc/profile.d/hadoop.sh <<-EOF
 export HADOOP_HOME=$HADOOP_HOME
+export PATH=$PATH:$HADOOP_HOME/bin
 EOF
 
   else

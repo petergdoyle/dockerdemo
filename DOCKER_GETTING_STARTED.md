@@ -206,7 +206,7 @@ $ docker exec centos7_demo /bin/bash
 ```console
 $ docker ps -l
 CONTAINER ID        IMAGE                          COMMAND                CREATED             STATUS              PORTS                     NAMES
-dd9044eec742        petergdoyle/static_nginx_web   "nginx -g 'daemon of   14 hours ago        Up 3 hours          0.0.0.0:32769->5000/tcp   static_nginx_web    
+dd9044eec742        demo/static_nginx_web   "nginx -g 'daemon of   14 hours ago        Up 3 hours          0.0.0.0:32769->5000/tcp   static_nginx_web    
 ```
 
 **To run a process inside a running container** with the exec command
@@ -277,14 +277,13 @@ __Create an NginX Static Web Server Container__
 FROM centos
 MAINTAINER Peter Doyle "peter.g.doyle@gmail.com"
 RUN yum -y update
-RUN yum -y install vim
 RUN yum -y install epel-release
-RUN yum -y install nginx
+RUN yum -y install vim nginx
 EXPOSE 5000
 ```
 Build the docker image using the ./Dockerfile
 ```console
-$ docker build -t="petergdoyle/static_nginx_web"
+$ docker build -t="demo/static_nginx_web"
 ```
 
 Build the Docker container using the Docker image just created.
@@ -293,7 +292,7 @@ Build the Docker container using the Docker image just created.
  - -p port forwarding required between Docker host and Docker container for the web server. The default for nginx to run on is 80 so that (should be) mapped to another port, in this case 5000 and bound to the 127.0.0.1 interface
  - -h name the host so it is not randomly assigned by the Docker container and you end up with a meaningful name when you attach to the container with a shell
  - --name the container with a meaningful name rather than a randomly assigned name the Docker container assigns if you don't specify one
- - the name of the image to use 'petergdoyle/static_nginx_web
+ - the name of the image to use 'demo/static_nginx_web
  - the nginx command to launch in the container (as well you must specify that nginx run in the foreground rather than as a background thread
 
 You should be able to see Docker layer the image as each step of the Dockerfile is processed.  Read more about how this works and the Union File System that Docker uses [How does a Docker image work?](https://docs.docker.com/introduction/understanding-docker/). **Take note of the build process as errors need to be fixed or you image will not be useable!**
@@ -302,11 +301,11 @@ __GOTCHA__
 If you combine commands packages using yum install (RHEL, Fedora, CentOS) or apt-get install, things may not install properly because of Dockers layering system. You should separate the install commands or you may not get the expected results.
 
 __GOTCHA__
-If there is any error on the build command, you need to go back and fix it. The built image may not work properly and if you run the ```$ docker images``` command you will see the name you gave the image wasn't applied (in this case "petergdoyle/static_nginx_web"). **AND** the build command doesn't fail! You won't be able to start it and you will have to go and do a ```docker rim <image_name>``` command to get rid of it and find the problem and build it again.
+If there is any error on the build command, you need to go back and fix it. The built image may not work properly and if you run the ```$ docker images``` command you will see the name you gave the image wasn't applied (in this case "demo/static_nginx_web"). **AND** the build command doesn't fail! You won't be able to start it and you will have to go and do a ```docker rim <image_name>``` command to get rid of it and find the problem and build it again.
 
 Create a container using the built image (notice the newline for the command for the container to run).
 ```console
-$ docker run -d -p 127.0.0.1:5000:80 -h nginx.dkr --name nginx_web petergdoyle/static_nginx_web \
+$ docker run -d -p 127.0.0.1:5000:80 -h nginx.dkr --name nginx_web demo/static_nginx_web \
 nginx -g "daemon off;"                                   
 ```
 __GOTCHA__

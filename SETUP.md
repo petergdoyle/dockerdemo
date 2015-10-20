@@ -60,7 +60,7 @@ I have created a vagrant “box” for our use based on CentOS and "push"'d it u
 >**Note:** If you wish to learn how to create your own vagrant "box" then that is outside the scope of this exercise BUT please let me know and I can walk you through how to build a box and push it up to Atlas or just keep it locally for personal use.
 
 **Proxy Considerations First**
-Since we will be using a terminal for most of this exercise (from Git Bash on Windows, or a regular terminal from OS X or Linux) you may need to get through to the Internet using a Proxy Server.  If you are in Atlanta the TP proxy server there is "http://atlwsproxy.galileo.corp.lcl:8080".  If you are in Denver, then the TP proxy server there is "http://denwsproxy.galileo.corp.lcl:8080". So export that value as an environment variable first, then set the other proxy variables that will be required by various cmd-line tools.
+Since we will be using a terminal for most of this exercise (from Git Bash on Windows, or a regular terminal from OS X or Linux) you may need to get through to the Internet using a Proxy Server. So export that value as an environment variable first, then set the other proxy variables that will be required by various cmd-line tools.
 
 
 **WIN, LIN, OSX** - For temporarily setting the proxy (on any platform), use this command in a terminal window.
