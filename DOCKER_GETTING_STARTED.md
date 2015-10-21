@@ -385,10 +385,9 @@ $ $ ll
 total 4
 -rw-r--r--. 1 vagrant vagrant 190 Sep  7 11:47 Dockerfile
 drwxr-xr-x. 1 vagrant vagrant 102 Sep  7 11:47 www
-drwxr-xr-x. 1 vagrant vagrant 170 Oct 20 16:59 xxx
 ```
 
-Within that directory there are a couple of folders that nginx_web container will need access to.To share a folder from the current directory (in this case where the Dockerfile is and likely all checked into source control) us the -v option. This example shows that the ```xxx``` directory is to be mapped, mounted and accessible to the container under the ```/xxx``` volume.
+Within that directory there are a couple of folders that nginx_web container will need access to, specifically the index.html file which is needed by the nginx container to provide a "home page". Those types of files and resources need to be authored on the host system and accessed by the container. To share a folder from the current directory (in this case where the Dockerfile is and likely all checked into source control) us the -v option. This example shows that the ```xxx``` directory is to be mapped, mounted and accessible to the container under the ```/xxx``` volume.
 
 ```console
 $ docker run --rm -ti --name="shared_volume_test" -v $PWD/xxx:/xxx centos:latest /bin/bash
