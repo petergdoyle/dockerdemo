@@ -305,9 +305,16 @@ If there is any error on the build command, you need to go back and fix it. The 
 
 Create a container using the built image (notice the newline for the command for the container to run).
 ```console
-$ docker run -d -p 127.0.0.1:5000:80 -h nginx.dkr --name nginx_web demo/static_nginx_web \
+$ docker run -d -p 0.0.0.0:5000:80 -h nginx.dkr --name nginx_web petergdoyle/static_nginx_web \
 nginx -g "daemon off;"                                   
 ```
+
+You should now be able to connect to the nginx web server from the virtual machine using the curl command
+```console
+$ curl http://127.0.0.1:5000/
+```
+
+
 __GOTCHA__
 Containers will immediately stop unless the commands are not running on foreground. Docker requires your command to keep running in the foreground. Otherwise, it thinks that your applications stops and shutdown the container. If there is no command to run, Docker stops the container as there is nothing more to do and it's nature is to run your command as a process for that container. Docker containers rely on the running process inside them to remain active. Applications and Services that normally run in the background daemonize themselves when started which would cause the container to run briefly and then stop when the daemon was forked and launched and the original process that forked it stopped.
 Sometimes this container behavior more or less has to be hacked in order to make things work properly. The ```nginx``` command has an option to run in the foreground but others may not.  So one way to get around this is to add ```tail -f /dev/null``` to your command. By doing this, even if your main command runs in the background, your container doesn’t stop because tail is keep running in the foreground. We can use this technique in the apache case.
@@ -371,7 +378,17 @@ $ docker inspect -f ''{{.NetworkSettings.IPAddress}}'' nginx_web
 
 Although discouraged in general (Micro-Service "shared-nothing" principal), it is generally useful especially for development to share filesystems between host and container
 
-To share a folder from the current directory (in this case where the Dockerfile is and likely all checked into source control) us the -v option. This example shows that the ```xxx``` directory is to be mapped, mounted and accessible to the container under the ```/xxx``` volume.
+From the vm change to the working directory /vagrant and run the following ```docker run``` command.
+```console
+$ cd /vagrant/static_web
+$ $ ll
+total 4
+-rw-r--r--. 1 vagrant vagrant 190 Sep  7 11:47 Dockerfile
+drwxr-xr-x. 1 vagrant vagrant 102 Sep  7 11:47 www
+drwxr-xr-x. 1 vagrant vagrant 170 Oct 20 16:59 xxx
+```
+
+Within that directory there are a couple of folders that nginx_web container will need access to.To share a folder from the current directory (in this case where the Dockerfile is and likely all checked into source control) us the -v option. This example shows that the ```xxx``` directory is to be mapped, mounted and accessible to the container under the ```/xxx``` volume.
 
 ```console
 $ docker run --rm -ti --name="shared_volume_test" -v $PWD/xxx:/xxx centos:latest /bin/bash
